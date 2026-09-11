@@ -4,7 +4,7 @@
 
 面向用户真实桌面的可选 Computer Use 插件。插件从自身依赖闭包启动固定版本的 [Open Computer Use](https://github.com/iFurySt/open-codex-computer-use) 原生 MCP 运行时，并通过 [`dsh-mcp-client`](https://github.com/deepseek-ai/deepseek-harness/tree/master/packages/mcp/mcp-client) 接入兼容 Codex 的应用观察和输入工具。运行时支持 macOS、Linux、Windows 的 arm64 与 x64。
 
-这个社区维护的衍生版本基于曾贡献给 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的原始 [`@valkia/dsh-plugin-computer-use`](https://github.com/valkia/dsh-plugin-computer-use) 实现，不属于 DeepSeek 官方发行版。
+本项目由 aibo204 社区维护，基于 [valkia/dsh-plugin-computer-use](https://github.com/valkia/dsh-plugin-computer-use) 开发，并使用 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件接口。项目遵循原 MIT 许可证，与 DeepSeek 官方无隶属或背书关系。
 
 这是 Agent Preset 插件，不是默认 Host 能力。每个挂载实例独占一个原生 MCP 进程、一个无障碍元素快照 namespace、逐动作审批策略和轮次清理。在 Host root 挂载会让工具暴露给所选 preset 之外的 Agent，因此不受支持。
 

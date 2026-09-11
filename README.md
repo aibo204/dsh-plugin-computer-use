@@ -4,7 +4,7 @@ English | [中文](README.zh.md)
 
 Opt-in Computer Use for the user's live desktop. The plugin launches the pinned [Open Computer Use](https://github.com/iFurySt/open-codex-computer-use) native MCP runtime from its own dependency closure and bridges its Codex-compatible app observation and input tools through [`dsh-mcp-client`](https://github.com/deepseek-ai/deepseek-harness/tree/master/packages/mcp/mcp-client). The runtime supports macOS, Linux, and Windows on arm64 and x64.
 
-This community-maintained derivative is based on the original [`@valkia/dsh-plugin-computer-use`](https://github.com/valkia/dsh-plugin-computer-use) implementation contributed to [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). It is not an official DeepSeek release.
+This project is maintained by the aibo204 community, builds on [valkia/dsh-plugin-computer-use](https://github.com/valkia/dsh-plugin-computer-use), and uses the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin APIs. It follows the original MIT license and has no affiliation with or endorsement from DeepSeek.
 
 This is an Agent Preset plugin, not a default Host capability. One mounted instance owns one native MCP process, one accessibility-element snapshot namespace, per-action approval policy, and turn cleanup. Mounting it on the Host root would expose the tools outside the chosen preset and is unsupported.
 
