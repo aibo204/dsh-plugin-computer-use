@@ -1,15 +1,14 @@
-/**
- * Package-owned invariant companion for `@valkia/dsh-plugin-computer-use`.
- * @module @valkia/dsh-plugin-computer-use/invariant
- */
-import type { Context } from '@deepseek-ai/cordis';
+import { Context } from "@deepseek-ai/cordis";
+//#region src/invariant.d.ts
 /** Cordis companion plugin name. */
-export declare const name = "computer-use-invariant";
+declare const name = "computer-use-invariant";
 /** Service required before the companion can reserve package ownership. */
-export declare const inject: string[];
+declare const inject: string[];
 /**
  * Register this package's invariant companion.
  * @param ctx - plugin context carrying the invariant registry.
  * @returns the installed registration's disposer.
  */
-export declare const apply: (ctx: Context) => Promise<() => void>;
+declare const apply: (ctx: Context) => Promise<() => void>;
+//#endregion
+export { apply, inject, name };

@@ -1,0 +1,1 @@
+{"version":3,"file":"typert.remote-client.d.ts","names":["cleanup","delete","image","list","pin"],"sources":["../src/archive.ts"],"sourcesContent":[null],"mappings":";;;;;;;;;IAqVEA,O;IAVMC,M;IApBAC,K;IANNC,I;IAgBMC,G;;;IAoBNJ,4B;IAVMC,2B;IApBAC,0B;IANNC,yB;IAgBMC,wB","ignoreList":[]}

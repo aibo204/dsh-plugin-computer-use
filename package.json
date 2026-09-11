@@ -1,16 +1,16 @@
 {
-  "name": "@valkia/dsh-plugin-computer-use",
+  "name": "@aibo204/dsh-plugin-computer-use",
   "description": "Opt-in DeepSeek Harness desktop Computer Use tools over Open Computer Use MCP",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/valkia/dsh-plugin-computer-use.git"
+    "url": "git+https://github.com/aibo204/dsh-plugin-computer-use.git"
   },
-  "homepage": "https://github.com/valkia/dsh-plugin-computer-use#readme",
+  "homepage": "https://github.com/aibo204/dsh-plugin-computer-use#readme",
   "bugs": {
-    "url": "https://github.com/valkia/dsh-plugin-computer-use/issues"
+    "url": "https://github.com/aibo204/dsh-plugin-computer-use/issues"
   },
   "keywords": [
     "deepseek-harness",
@@ -23,6 +23,15 @@
     "node": "^22.19.0 || >=24.0.0"
   },
   "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "build": "tsdown --config tsdown.host.config.ts && node scripts/generate-typert.mjs && tsdown --config tsdown.client.config.ts && node scripts/normalize-generated.mjs lib/client.js && tsc -p tsconfig.declarations.json",
+    "check": "pnpm run build && pnpm run typecheck && pnpm run test",
+    "native:doctor": "open-computer-use doctor",
+    "native:list-apps": "open-computer-use list-apps",
+    "native:version": "open-computer-use --version",
+    "test": "vitest run --config vitest.config.ts",
+    "typecheck": "tsc --noEmit"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -33,9 +42,25 @@
       "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
     "./invariant": {
       "types": "./lib/invariant.d.ts",
       "default": "./lib/invariant.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./archive": {
+      "types": "./lib/archive.d.ts",
+      "default": "./lib/archive.js"
     },
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
@@ -43,11 +68,29 @@
   "files": [
     "lib/**/*.js",
     "lib/**/*.d.ts",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts",
+    "lib/typert.remote-client.d.ts.map",
     "cordis.patch.yml",
     "README.md",
     "README.zh.md"
   ],
   "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-trajectory",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-settings-plugins",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-api-remotes"
+      ],
+      "platform": "web"
+    },
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
@@ -56,6 +99,7 @@
     "@deepseek-ai/cordis": ">=4.0.1-rc.1 <5",
     "@deepseek-ai/dsh-agent": ">=0.0.1-rc.1 <1",
     "@deepseek-ai/dsh-invariants": ">=0.0.1-rc.1 <1",
+    "@deepseek-ai/dsh-llm": ">=0.0.1-rc.1 <1",
     "@deepseek-ai/dsh-session": ">=0.0.1-rc.1 <1",
     "@deepseek-ai/dsh-subprocess": ">=0.0.1-rc.1 <1",
     "@deepseek-ai/dsh-system-prompt": ">=0.0.1-rc.1 <1",
@@ -63,8 +107,41 @@
     "@deepseek-ai/dsh-user-approval": ">=0.0.1-rc.1 <1"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-mcp-client": "^0.0.1-rc.1",
-    "@deepseek-ai/schemastery": "^3.18.1-rc.1",
-    "open-computer-use": "0.3.1"
+    "@deepseek-ai/dsh-api-remotes": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-client-locale": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-client-ui-settings": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-client-ui-settings-plugins": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-client-ui-slots": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-home-paths": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-mcp-client": "^0.1.5-rc.1",
+    "@deepseek-ai/dsh-settings": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-typert-protocol": "0.1.5-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.2",
+    "open-computer-use": "0.3.1",
+    "react": "^18.3.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-agent": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-attachment": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-code-runtime": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-http-proxy": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-invariants": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-llm": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-scope": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-session": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-session-projection": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-subprocess": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-system-prompt": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-tools": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-typert-generator": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-user-approval": "0.1.5-rc.1",
+    "@types/node": "^24.10.0",
+    "@types/react": "~18.3.31",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
   }
 }

@@ -1,4 +1,8 @@
-# Optional Profile Bundle: install the package-local Computer Use runtime.
-# The model-facing row belongs in an authored Agent Preset. One live Session
-# owns the instance's MCP process and accessibility-element snapshot namespace.
-[]
+# Optional Profile Bundle: expose the browser audit companion globally. The
+# model-facing row belongs in an authored Agent Preset. One live Session owns
+# that instance's MCP process and accessibility-element snapshot namespace.
+- insert:
+    - id: computer-use-client-companion
+      name: '@aibo204/dsh-plugin-computer-use'
+      config:
+        clientCompanionOnly: true

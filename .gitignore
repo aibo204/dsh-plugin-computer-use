@@ -1,4 +1,5 @@
 node_modules/
+.typert-work/
 coverage/
 .DS_Store
 *.tgz
