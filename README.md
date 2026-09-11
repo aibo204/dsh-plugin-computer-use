@@ -13,8 +13,17 @@ This is an Agent Preset plugin, not a default Host capability. One mounted insta
 Install the optional Profile Bundle, then add the plugin row to an authored Agent Preset:
 
 ```sh
-dsh plugin --profile web add github:aibo204/dsh-plugin-computer-use
+dsh plugin --profile web add github:aibo204/dsh-plugin-computer-use#v0.2.1
 ```
+
+pnpm requires each Profile to make an explicit decision about dependency install scripts. On the first installation, DSH may stop after adding an `open-computer-use` placeholder to `$DSH_HOME/profiles/web/pnpm-workspace.yaml`. Its `postinstall` only prints onboarding information, so this plugin recommends disabling it:
+
+```yaml
+allowBuilds:
+  open-computer-use: false
+```
+
+Save that file, then repeat the `dsh plugin` command. This decision is retained by the Profile for later updates.
 
 ```yaml
 - id: computer-use

@@ -13,8 +13,17 @@
 先安装可选 Profile Bundle，再把插件行加入自行创建的 Agent Preset：
 
 ```sh
-dsh plugin --profile web add github:aibo204/dsh-plugin-computer-use
+dsh plugin --profile web add github:aibo204/dsh-plugin-computer-use#v0.2.1
 ```
+
+pnpm 要求每个 Profile 明确决定是否运行依赖的安装脚本。首次安装时，DSH 可能在 `$DSH_HOME/profiles/web/pnpm-workspace.yaml` 中加入 `open-computer-use` 待选择项后停止。它的 `postinstall` 只输出引导信息，因此本插件建议关闭：
+
+```yaml
+allowBuilds:
+  open-computer-use: false
+```
+
+保存后再次执行 `dsh plugin` 命令。该 Profile 会为后续升级保留这个选择。
 
 ```yaml
 - id: computer-use
